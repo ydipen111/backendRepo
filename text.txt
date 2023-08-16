@@ -1,0 +1,66 @@
+1.npm init(node package manger)
+2.npm i express (dependencies and package-lock jason)--folder structure
+const express = require("express")
+const app =express()
+
+
+app.listen(8000,()=>{
+    console.log("server started");
+})  
+
+
+
+3,.xxpostman_inside(new collection and add request)
+to link a db we need mongoose
+npm i mongoose
+
+const mongoose = require("mongoose")
+mongoose.connect('mongodb://127.0.0.1:27017/test')
+  .then(() => console.log('db Connected!'));
+/////////////////////////////////////////////
+  relational db-pre planned(sql and no sql)
+
+  1......index.js
+  const Product = require("./model/product")
+
+
+app.post("/api/products",(req,res)=>{
+    Product.create({title : "shirt"})
+    res.send("poroduct created...")
+})
+ 2....... product.js
+ 
+
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
+
+const ProductSchema = new Schema({
+  title: String,
+});
+ module.exports = mongoose.model("Product",ProductSchema)
+////////////
+to send a post product
+
+app.post('/api/products',async function (req,res){
+        try{
+         Product.create({title: "hello world"})
+        res.send("produc created")}
+        catch(err){
+            res.status(500).send({msg:"server error"})
+        }
+    })
+
+to receive  product name
+*****
+app.get("/api/products", async function (req,res) {
+    let products =await Product.find()
+    console.log({products})
+    res.send(products)
+})
+/////
+try{
+
+}catch{
+  res.send(500).send({smg:"server down});
+}
