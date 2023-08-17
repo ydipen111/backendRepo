@@ -43,9 +43,11 @@ app.post('/api/products',async function (req,res){
 app.get("/api/products", async function (req,res) {
     try{
 
+        
         let products =await Product.find()
-    console.log({products})
-    res.send(products)
+        console.log({products})
+        res.send(products)
+    
 }catch(err){
     console.log
     res.status(500).send({msg:"server error"})
