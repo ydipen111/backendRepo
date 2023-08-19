@@ -64,3 +64,40 @@ try{
 }catch{
   res.send(500).send({smg:"server down});
 }
+
+ctr+enter and alth + 
+/////////////signup
+app.use(express.json())
+
+app.post('/api/signup',async function (req,res){
+    try{let user = await User.create({name:req.body.name,
+                                      email:req.body.email,
+                                      password:req.body.password})
+    res.send(user)}
+    catch(err){
+        console.log(err)
+        res.status(500).send({msg:"Not signup "})
+    }
+    /////////////
+    user.js
+    
+// const app =express()
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+// const ObjectId = Schema.ObjectId;
+
+const UserSchema = new Schema({
+  name: {type:String,
+         required:true
+        },
+
+  email: {type:String,
+    required:true
+},
+
+  password:{type:String,
+    required:true
+},
+});
+ module.exports = mongoose.model("User",UserSchema)
