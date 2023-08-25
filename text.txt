@@ -1,3 +1,59 @@
+
+npm i joi
+const Joi = require('joi');
+
+const SignupSchema = Joi.object({
+    name: Joi.string()
+        .alphanum()
+        .min(3)
+        .max(30)
+        .required(),
+        
+        email: Joi.string()
+        .alphanum()
+        .min(8)
+        .max(30)
+        .required(),
+})
+
+app.post('/api/signup', async function (req, res) {
+    try {
+
+        const value = await SignupSchema.validateAsync(req.body);
+        // let user = await User.create(req.body)
+        // res.send(user)
+    }
+
+    catch (err) {
+        let errors = err.details
+        errors = errors.map(el =>{
+            return {
+                msg:el.message,
+                parms:el.context.key
+            }
+        })
+
+        console.log(err);
+        console.log(err.message)
+
+        if (err.name === "ValidationError") {
+            return res.status(400).send({
+                msg: "Bad message",
+                errors: errors,
+                // errors: err.message--errors:err.errors--for client server
+            })
+        }
+
+        res.status(500).send({ msg: "Required namedd" })
+
+    }
+})
+
+
+
+
+
+///////////////////////////////////
 1.npm init(node package manger)
 2.npm i express (dependencies and package-lock jason)--folder structure
 const express = require("express")
